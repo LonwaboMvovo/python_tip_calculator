@@ -9,6 +9,10 @@ def rounder_upper(base_num):
     return round_to * ceil(base_num/round_to)
 
 
+def money_display(amount):
+    return f'{currency_symbols[currency]}{round(amount, 2):.2f}'
+
+
 currency_symbols = {
     'r' : 'R',
     'p' : '£',
@@ -30,7 +34,6 @@ total = bill + tip
 
 if round_up == 'y':
     round_to = int(input('Round to nearest (1), (5), (10): '))
-    tip = rounder_upper(tip)
     total = rounder_upper(total)
 
 if num_ppl > 1:
@@ -38,11 +41,10 @@ if num_ppl > 1:
     total_pp = total / num_ppl
 
     if round_up == 'y':
-        tip_pp = rounder_upper(tip_pp)
         total_pp = rounder_upper(total_pp)
 
-    print(f'Tip per person: {currency_symbols[currency]}{round(tip_pp, 2):.2f}')
-    print(f'Total per person: {currency_symbols[currency]}{round(total_pp, 2):.2f}')
+    print('Tip per person:', money_display(tip_pp))
+    print('Total per person:', money_display(total_pp))
 
     short = round(total, 2) - round(total_pp, 2) * 3
 
@@ -50,8 +52,8 @@ if num_ppl > 1:
         tip = tip_pp * num_ppl
         total = total_pp * num_ppl
 
-print(f'Tip: {currency_symbols[currency]}{round(tip, 2):.2f}')
-print(f'Total: {currency_symbols[currency]}{round(total, 2):.2f}')
+print('Tip:', money_display(tip))
+print('Total:', money_display(total))
 
 if round(short, 2) > 0:
-    print(f'Short: {currency_symbols[currency]}{round(short, 2):.2f}')
+    print('Short:', money_display(short))
