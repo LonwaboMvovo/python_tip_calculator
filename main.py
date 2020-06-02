@@ -17,6 +17,8 @@ currency_symbols = {
     'd' : '$'
 }
 
+short = 0
+
 num_ppl = int(input('Number of people: '))
 currency = input('(R)and / (P)ound / (Y)en / (E)ure / (D)ollar: ').lower()
 bill = float(input(f'Bill: {currency_symbols[currency]}'))
@@ -31,20 +33,26 @@ else:
     tip = bill * (tip_perc/100)
     total = bill + tip
 
-print(f'Tip: {currency_symbols[currency]}{round(tip, 2):.2f}')
-print(f'Total: {currency_symbols[currency]}{round(total, 2):.2f}')
-
 if num_ppl > 1:
     if round_up == 'y':
         tip_pp = rounder_upper(tip / num_ppl)
         total_pp = rounder_upper(total / num_ppl)
     else:
         tip_pp = tip / num_ppl
-        total_pp = total / num_ppl 
+        total_pp = total / num_ppl
+
+    short = total - round(total_pp, 2) * 3
+
+    if short <= 0:
+        tip = tip_pp * num_ppl
+        total = total_pp * num_ppl
 
     print(f'Tip per person: {currency_symbols[currency]}{round(tip_pp, 2):.2f}')
     print(f'Total per person: {currency_symbols[currency]}{round(total_pp, 2):.2f}')
 
-    short = total - round(total_pp, 2) * 3
-    if short > 0:
-        print(f'Short: {currency_symbols[currency]}{round(short, 2):.2f}')
+
+print(f'Tip: {currency_symbols[currency]}{round(tip, 2):.2f}')
+print(f'Total: {currency_symbols[currency]}{round(total, 2):.2f}')
+
+if round(short, 3) > 0:
+    print(f'Short: {currency_symbols[currency]}{round(short, 2):.2f}')
