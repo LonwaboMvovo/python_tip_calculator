@@ -23,17 +23,48 @@ currency_symbols = {
 
 short = 0
 
-num_ppl = int(input('Number of people: '))
-currency = input('(R)and / (P)ound / (Y)en / (E)ure / (D)ollar: ').lower()
-bill = float(input(f'Bill: {currency_symbols[currency]}'))
-tip_perc = float(input('Tip percentage: '))
+while True:
+    try:
+        num_ppl = int(input('Number of people: '))
+        break
+    except ValueError:
+        print('Invalid input. Please input an integer for the number of people.')
+
+while True:
+    try:
+        currency = input('(R)and / (P)ound / (Y)en / (E)ure / (D)ollar: ').lower()
+        assert currency == 'r' or currency == 'p' or currency == 'y' or currency == 'e' or currency == 'd'
+        break
+    except:
+        print('Invalid input. Please input either (R) for Rand, (P) for Pound, (Y) for Yen, (E) for Euro or (D) for Dollar for the currency.')
+
+while True:
+    try:
+        bill = float(input(f'Bill: {currency_symbols[currency]}'))
+        break
+    except ValueError:
+        print('Invalid input. Please input a float for the bill.')
+
+while True:
+    try:
+        tip_perc = float(input('Tip percentage: '))
+        break
+    except ValueError:
+        print('Invalid input. Please input a float for the tip percentage.')
+
 round_up = input('Round up? (Y)es or (N)o: ').lower()
 
 tip = bill * (tip_perc/100)
 total = bill + tip
 
 if round_up == 'y':
-    round_to = int(input('Round to nearest (1), (5), (10): '))
+    while True:
+        try:
+            round_to = int(input('Round to nearest (1), (5), (10): '))
+            assert round_to == 1 or round_to == 5 or round_to == 10
+            break
+        except:
+            print('Invalid input. Please input either 1, 5 or 10 for the number you would like your total to be rounded to.')
     total = rounder_upper(total)
 
 if num_ppl > 1:
